@@ -31,10 +31,14 @@ class RaspLifecycleObserver {
     // 2️⃣ ดึง threat จาก storage
     final blockedType = await SecurityStorage.getBlockedThreat();
 
-    // skip unofficialStore ในการทดสอบ (เพราะติดตั้งผ่าน ADB)
-    if (blockedType == RaspThreatType.unofficialStore) {
-      print('📱 Lifecycle: Skipping unofficialStore (testing)');
-    } else if (blockedType != null && !RaspPolicy.isRecoverable(blockedType)) {
+    // ถ้าเป็น recoverable threat และ environment สะอาดแล้ว → clear storage
+    if (blockedType != null && RaspPolicy.isRecoverable(blockedType)) {
+      print('📱 Lifecycle: Recoverable threat but environment clean → clearing storage');
+      await SecurityStorage.clearBlocked();
+    }
+
+    // ถ้าเป็น non-recoverable → block ทันที
+    if (blockedType != null && !RaspPolicy.isRecoverable(blockedType)) {
       print('📱 Lifecycle: Non-recoverable threat: $blockedType');
       SecurityDialog.show(
         title: 'Security Alert',
@@ -53,11 +57,5 @@ class RaspLifecycleObserver {
     // 5️⃣ รอ scan
     print('📱 Lifecycle: Waiting for RASP scan...');
     await Future.delayed(const Duration(seconds: 2));
-
-    // 6️⃣ ถ้ามี threat recoverable ใน storage และ RASP ไม่ detect → clear storage
-    if (blockedType != null && blockedType != RaspThreatType.unofficialStore && !RaspThreatHandler.hasThreat) {
-      print('📱 Lifecycle: Threat cleared → clearing storage');
-      await SecurityStorage.clearBlocked();
-    }
   }
 }

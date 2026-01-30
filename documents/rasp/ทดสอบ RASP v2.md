@@ -2,6 +2,9 @@
 
 ## 🔧 Setup
 ```bash
+flutter clean
+flutter pub get
+
 # 1. Clear app data
 adb shell pm clear com.chongdev.pos_android
 

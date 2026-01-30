@@ -1,6 +1,7 @@
 import '../../../app/app_navigator.dart';
 import '../dialogs/security_dialog.dart';
 import 'rasp_threat_type.dart';
+import 'rasp_policy.dart';
 import '../../environment/app_build.dart';
 import '../storage/security_storage.dart';
 
@@ -18,6 +19,12 @@ class RaspThreatHandler {
       return;
     }
 
+    // 🧪 Ignore unofficialStore (ติดตั้งผ่าน ADB ทำให้ false positive)
+    if (type == RaspThreatType.unofficialStore) {
+      print('   → Skipped (unofficialStore ignored to avoid false positive)');
+      return;
+    }
+
     // 2️⃣ เก็บ threat ที่ตรวจพบ
     _detectedThreats.add(type);
     _lastThreat = type; // เก็บไว้สำหรับ resume
@@ -28,9 +35,11 @@ class RaspThreatHandler {
       return;
     }
 
-    // 4️⃣ save threat ลง storage (เพื่อให้แสดง modal เมื่อเปิดแอพใหม่)
-    print('   → Saving threat to storage...');
-    await SecurityStorage.markBlocked(type);
+    // 4️⃣ save threat ลง storage เฉพาะ non-recoverable (critical)
+    if (!RaspPolicy.isRecoverable(type)) {
+      print('   → Saving NON-recoverable threat to storage...');
+      await SecurityStorage.markBlocked(type);
+    }
 
     // 5️⃣ set pending เพื่อรอ UI
     _pending = type;

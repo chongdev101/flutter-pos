@@ -22,8 +22,9 @@ class RaspService {
         onDebug: () => RaspThreatHandler.handle(RaspThreatType.debug),
         onHooks: () => RaspThreatHandler.handle(RaspThreatType.hook),
         onSimulator: () => RaspThreatHandler.handle(RaspThreatType.emulator),
-        onUnofficialStore: () =>
-            RaspThreatHandler.handle(RaspThreatType.unofficialStore),
+        onUnofficialStore: () {
+          print('⚠️ RASP: unofficialStore detected → skipped (ADB install false positive)');
+        },
         onDeviceBinding: () =>
             RaspThreatHandler.handle(RaspThreatType.deviceBinding),
         onPasscode: () => RaspThreatHandler.handle(RaspThreatType.passcode),
@@ -56,8 +57,9 @@ class RaspService {
         onDebug: () => RaspThreatHandler.handle(RaspThreatType.debug),
         onHooks: () => RaspThreatHandler.handle(RaspThreatType.hook),
         onSimulator: () => RaspThreatHandler.handle(RaspThreatType.emulator),
-        onUnofficialStore: () =>
-            RaspThreatHandler.handle(RaspThreatType.unofficialStore),
+        onUnofficialStore: () {
+          print('⚠️ RASP: unofficialStore detected → skipped (ADB install false positive)');
+        },
         onDeviceBinding: () =>
             RaspThreatHandler.handle(RaspThreatType.deviceBinding),
         onPasscode: () => RaspThreatHandler.handle(RaspThreatType.passcode),

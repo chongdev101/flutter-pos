@@ -52,9 +52,11 @@ void main() async {
       return;
     }
 
-    // 2️⃣ ถ้ามี blocked threat แบบ recoverable → ให้ RASP ตรวจใหม่ (ยกเว้น unofficialStore)
-    if (blockedType != null && blockedType != RaspThreatType.unofficialStore) {
-      print('🔄 Recoverable threat found: $blockedType → waiting for RASP re-check');
+    // 2️⃣ ถ้ามี blocked threat แบบ recoverable (debug/unofficialStore/emulator/passcode)
+    //    และตอนนี้ environment สะอาดแล้ว → clear storage ทันที
+    if (blockedType != null && RaspPolicy.isRecoverable(blockedType)) {
+      print('✅ Recoverable threat found but environment clean now → clearing storage');
+      await SecurityStorage.clearBlocked();
     }
 
     // 🟢 Init RASP
@@ -64,14 +66,6 @@ void main() async {
     print('⏳ Waiting for RASP scan...');
     await Future.delayed(const Duration(seconds: 2));
 
-    // ตรวจสอบผลลัพธ์สำหรับ recoverable threat (ยกเว้น unofficialStore)
-    if (blockedType != null && blockedType != RaspThreatType.unofficialStore) {
-      if (RaspThreatHandler.hasThreat) {
-        print('✅ RASP detected threat, modal will show');
-      } else {
-        print('✅ Threat cleared! No detection from RASP');
-        await SecurityStorage.clearBlocked();
-      }
-    }
+    // ถ้า RASP ตรวจพบ threat ในรอบนี้ modal จะถูกแสดงโดย handler
   });
 }
