@@ -110,6 +110,17 @@ class _RASPFlutterPageState extends State<RASPFlutterPage> {
     });
   }
 
+  void _resetDetectionStatus() {
+    setState(() {
+      _isRootDetected = null;
+      _isDebugModeDetected = null;
+      _isDeveloperModeDetected = null;
+      _isEmulatorDetected = null;
+      _isHookDetected = null;
+      _isAppIntegrityFailed = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -279,6 +290,25 @@ class _RASPFlutterPageState extends State<RASPFlutterPage> {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   backgroundColor: Colors.blue[700],
                   foregroundColor: Colors.white,
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // Reset Button
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: _isChecking ? null : _resetDetectionStatus,
+                icon: const Icon(Icons.refresh),
+                label: const Text(
+                  'รีเซ็ตผลการตรวจสอบ',
+                  style: TextStyle(fontSize: 16),
+                ),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  foregroundColor: Colors.blue[700],
+                  side: BorderSide(color: Colors.blue[700]!),
                 ),
               ),
             ),
