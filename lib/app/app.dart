@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-import 'app_navigator.dart';
+import 'package:get/get.dart';
+import 'routes/app_pages.dart';
+import 'routes/app_routes.dart';
+import 'bindings/global_binding.dart';
 import '../features/home/home_page.dart';
-import '../core/security/rasp/rasp_lifecycle_observer.dart';
+import '../core/security/rasp/rasp_threat_type.dart';
+import '../core/security/rasp/rasp_controller.dart';
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, this.blockedType});
+  final RaspThreatType? blockedType;
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -16,11 +21,13 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    // Start RASP after binding ready
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<RaspController>().onAppStart(widget.blockedType);
+    });
+
     _lifecycleListener = AppLifecycleListener(
-      onResume: () {
-        print('📱 App Resumed - Re-checking RASP...');
-        RaspLifecycleObserver.onAppResumed();
-      },
+      onResume: () => Get.find<RaspController>().onAppResumed(),
     );
   }
 
@@ -32,14 +39,14 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo 303',
+    return GetMaterialApp(
+      title: 'Flutter POS',
       debugShowCheckedModeBanner: false,
-      navigatorKey: navigatorKey,
+      initialBinding: GlobalBinding(),
+      initialRoute: AppRoutes.home,
+      getPages: AppPages.pages,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: const HomePage(),
     );

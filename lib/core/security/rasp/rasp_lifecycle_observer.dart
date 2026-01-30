@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import '../storage/security_storage.dart';
 import '../dialogs/security_dialog.dart';
 import '../../environment/developer_mode_checker.dart';
@@ -52,7 +53,7 @@ class RaspLifecycleObserver {
 
     // 4️⃣ Restart RASP → re-scan
     print('📱 Lifecycle: Restarting RASP...');
-    await RaspService.instance.restart();
+    await Get.find<RaspService>().restart();
 
     // 5️⃣ รอ scan
     print('📱 Lifecycle: Waiting for RASP scan...');

@@ -1,4 +1,3 @@
-import '../../../app/app_navigator.dart';
 import '../dialogs/security_dialog.dart';
 import 'rasp_threat_type.dart';
 import 'rasp_policy.dart';
@@ -48,8 +47,6 @@ class RaspThreatHandler {
   }
 
   static void tryShowIfUiReady() {
-    final context = navigatorKey.currentContext;
-    if (context == null) return;
     showPendingIfAny();
   }
 

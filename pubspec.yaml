@@ -12,10 +12,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   freerasp: 6.11.0
   shared_preferences: ^2.2.3
-  get: ^4.6.1
-  get_it: 8.0.3
-  sqflite: ^2.0.2
-  path:
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:

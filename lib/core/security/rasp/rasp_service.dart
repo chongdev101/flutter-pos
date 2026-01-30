@@ -4,9 +4,7 @@ import 'rasp_threat_handler.dart';
 import 'rasp_threat_type.dart';
 
 class RaspService {
-  RaspService._();
-
-  static final RaspService instance = RaspService._();
+  RaspService();
 
   bool _isStarted = false;
 
