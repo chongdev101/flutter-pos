@@ -1,0 +1,75 @@
+# ========================
+# Flutter / Dart
+# ========================
+.dart_tool/
+.packages
+.pub/
+.pub-cache/
+.build/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Flutter build
+build/
+
+# Generated files
+*.g.dart
+*.freezed.dart
+*.mocks.dart
+
+# ========================
+# Android
+# ========================
+android/.gradle/
+android/local.properties
+android/key.properties
+android/**/GeneratedPluginRegistrant.java
+
+# Keystore
+*.jks
+*.keystore
+
+# ========================
+# iOS / macOS
+# ========================
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/app.flx
+ios/Flutter/ephemeral/
+
+macos/Pods/
+macos/Flutter/ephemeral/
+
+# ========================
+# Web
+# ========================
+web/.dart_tool/
+web/build/
+
+# ========================
+# Windows / Linux
+# ========================
+windows/flutter/ephemeral/
+linux/flutter/ephemeral/
+
+# ========================
+# IDE
+# ========================
+.idea/
+.vscode/
+*.iml
+
+# ========================
+# OS
+# ========================
+.DS_Store
+Thumbs.db
+
+# ========================
+# Environment
+# ========================
+.env
+.env.*
