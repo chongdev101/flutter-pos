@@ -74,9 +74,27 @@ flutter run --flavor secure
 flutter build apk --flavor secure --release
 adb install build/app/outputs/flutter-apk/app-secure-release.apk
 
+keytool -exportcert \
+  -alias androiddebugkey \
+  -keystore ~/.android/debug.keystore \
+  -storepass android \
+  -keypass android \
+  | openssl sha256 -binary \
+  | openssl base64
 
-flutter build apk --flavor secure --release --dart-define=SECURE_BUILD=true
+flutter build apk \
+  --flavor secure \
+  -t lib/main.dart \
+  --dart-define=SECURE_BUILD=true \
+  --release
 adb -s RRCR700E8PK install -r build/app/outputs/flutter-apk/app-secure-release.apk
+
+หรือ
+flutter run \                                                              
+  -d RRCR700E8PK \
+  --flavor secure \
+  -t lib/main.dart \
+  --dart-define=SECURE_BUILD=true
 ```
 
 > ⚠️ สำคัญมาก: อย่ารันผ่าน Android Studio ตอนทดสอบ USB debugging
@@ -87,6 +105,7 @@ adb -s RRCR700E8PK install -r build/app/outputs/flutter-apk/app-secure-release.a
 
 ```bash
 adb -s RRCR700E8PK logcat | grep -i talsec
+
 ```
 
 หรือเปิดอีก terminal ไว้ดู

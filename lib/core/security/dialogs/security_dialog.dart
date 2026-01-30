@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../../app/app_navigator.dart';
 
 class SecurityDialog {
@@ -28,9 +29,12 @@ class SecurityDialog {
               TextButton(
                 onPressed: () {
                   _isShowing = false;
-                  // ปิด dialog แบบปลอดภัย
+
+                  // ปิด dialog อย่างปลอดภัย
                   Navigator.of(context, rootNavigator: true).pop();
-                  // (ถ้าต้องการ action เพิ่ม เช่น logout ให้ทำที่นี่)
+
+                  // 🔥 Hard block: ปิดแอพทันที
+                  SystemNavigator.pop();
                 },
                 child: const Text('ตกลง'),
               ),

@@ -1,5 +1,13 @@
 class AppBuild {
-  /// true เฉพาะ secure flavor เท่านั้น
-  static const bool isSecure =
-      bool.fromEnvironment('SECURE_BUILD', defaultValue: false);
+  // in app_build.dart
+  static bool? _overrideSecure;
+
+  static void overrideSecureForTest(bool value) {
+    _overrideSecure = value;
+  }
+
+  static bool get isSecure {
+    if (_overrideSecure != null) return _overrideSecure!;
+    return const bool.fromEnvironment('SECURE_BUILD');
+  }
 }

@@ -1,17 +1,31 @@
 import '../../../app/app_navigator.dart';
 import '../dialogs/security_dialog.dart';
+import 'rasp_policy.dart';
 import 'rasp_threat_type.dart';
+import '../../environment/app_build.dart';
+import '../storage/security_storage.dart';
 
 class RaspThreatHandler {
-  // store pending single/latest threat (สามารถเปลี่ยนเป็น queue ได้ถ้าต้องการ)
   static RaspThreatType? _pending;
 
-  static void handle(RaspThreatType type) {
-    // store pending threat (do not show dialog here)
-    _pending = type;
+  static Future<void> handle(RaspThreatType type) async {
+    // 1️⃣ dev / non-secure build → ไม่ enforce
+    if (!AppBuild.isSecure) {
+      return;
+    }
 
-    // if UI already ready we can try to show immediately via navigatorKey
-    // but safer approach is to require UI to call `showPendingIfAny` after frame
+    // 2️⃣ ป้องกัน event ซ้ำ (🔥 บรรทัดที่คุณถาม)
+    if (_pending == type) {
+      return;
+    }
+
+    // 3️⃣ enforce policy
+    if (RaspPolicy.isCritical(type)) {
+      await SecurityStorage.markBlocked(type);
+    }
+
+    // 4️⃣ set pending เพื่อรอ UI
+    _pending = type;
     tryShowIfUiReady();
   }
 
@@ -52,5 +66,9 @@ class RaspThreatHandler {
     }
 
     SecurityDialog.show(title: title, message: message);
+  }
+
+  static void resetForTest() {
+    _pending = null;
   }
 }
