@@ -10,4 +10,6 @@ class AppBuild {
     if (_overrideSecure != null) return _overrideSecure!;
     return const bool.fromEnvironment('SECURE_BUILD');
   }
+
+  static String get buildType => isSecure ? 'SECURE' : 'DEV';
 }

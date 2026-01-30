@@ -48,4 +48,9 @@ class SecurityDialog {
   static void resetForTesting() {
     _isShowing = false;
   }
+
+  /// Reset state เมื่อ app resume (เผื่อ _isShowing ค้างอยู่)
+  static void reset() {
+    _isShowing = false;
+  }
 }

@@ -20,11 +20,17 @@ class SecurityStorage {
     for (final t in RaspThreatType.values) {
       if (t.name == value) return t;
     }
+
     return null; // ← ถ้า enum เปลี่ยนในอนาคต
   }
 
   static Future<void> clear() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_keyThreat);
+  }
+
+  /// ลบ blocked threat (ใช้เมื่อ threat หายไปแล้ว)
+  static Future<void> clearBlocked() async {
+    await clear();
   }
 }

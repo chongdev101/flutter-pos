@@ -261,9 +261,7 @@ class _RASPFlutterPageState extends State<RASPFlutterPage> {
               number: '6',
               title: 'App Integrity Check',
               subtitle: 'ตรวจสอบการแก้ไขหรือ Re-sign แอป',
-              status: _isAppIntegrityFailed != null
-                  ? !_isAppIntegrityFailed!
-                  : null,
+              status: _isAppIntegrityFailed,
             ),
             const SizedBox(height: 32),
 

@@ -1,0 +1,14 @@
+{
+  "androidAllowedPackageName": [
+    "com.chongdev.pos_android",
+    "com.chongdev.pos_android.dev"
+  ],
+  "androidAllowedSigningCertificateHashes": [
+    "49:6A:E8:A9:F6:7E:64:61:F3:00:EF:02:76:A4:DD:22:08:99:E4:A2:6E:62:74:76:E1:52:04:6D:CD:B6:B9:32",
+    "SWroqfZ+ZGHzAO8CdqTdIgiZ5KJuYnR24VIEbc22uTI="
+  ],
+  "androidStore": [
+    "google_play",
+    "unknown"
+  ]
+}

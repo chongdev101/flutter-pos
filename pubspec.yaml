@@ -1,6 +1,6 @@
 name: pos_android
-description: A new Flutter project.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+description: POS Android Application
+publish_to: 'none'
 version: 1.0.0+1
 
 environment:
@@ -12,6 +12,10 @@ dependencies:
   cupertino_icons: ^1.0.8
   freerasp: 6.11.0
   shared_preferences: ^2.2.3
+  get: ^4.6.1
+  get_it: 8.0.3
+  sqflite: ^2.0.2
+  path:
 
 dev_dependencies:
   flutter_test:
