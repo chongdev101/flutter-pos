@@ -53,6 +53,7 @@ keytool -genkeypair \
 
 ```
 pos-release.jks
+axonpos.jks
 ```
 
 👉 **เก็บไฟล์นี้ไว้ดี ๆ** (backup อย่างน้อย 2 ที่)
@@ -63,6 +64,7 @@ pos-release.jks
 
 ```bash
 keytool -list -v -keystore pos-release.jks
+keytool -list -v -keystore axonpos.jks
 ```
 
 ดูให้แน่ใจว่า:
@@ -208,6 +210,8 @@ AndroidConfig(
   ],
 )
 ```
+
+[//]: # (BASE64)
 
 ❌ ถ้าใส่ debug cert → release app จะ block ตัวเองทันที
 
